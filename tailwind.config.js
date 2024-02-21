@@ -5,8 +5,14 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        'ss': '10px', // Định nghĩa breakpoint 'ss' với giá trị là 20px
+      },
+      utilities: {
+        'ss': '10px',
+      },
+    },
   },
   plugins: [],
-}
-
+};
