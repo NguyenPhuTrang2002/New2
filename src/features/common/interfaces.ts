@@ -100,6 +100,14 @@ export interface IProductFormCreate {
   description: string;
   image: string;
 }
+export interface IProduct {
+  id: string;
+  name: string;
+  price: string;
+  quantity: string;
+  description: string;
+  image: string;
+}
 
 export interface RootState {
   reload: boolean;

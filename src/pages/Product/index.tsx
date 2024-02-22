@@ -26,7 +26,8 @@ const ProductPage = () => {
         const res = await productApi.getAllProducts(
           {
             page: 1,
-            limit: 10
+            limit: 10,
+            // keyword: 'váy'
           }
         );
         console.log(res);

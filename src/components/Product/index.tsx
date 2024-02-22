@@ -11,6 +11,7 @@ interface Props {
 }
 
 interface ProductArray {
+  id: string;
   name: string;
   price: string;
   quantity: string;
@@ -84,6 +85,7 @@ const Product = ({
                 {ListProductArray.map((product, PRS) => (
                   <ListProducts
                     key={PRS}
+                    id={product.id}
                     title={product.name}
                     price={product.price}
                     total={product.quantity}
