@@ -10,6 +10,7 @@ class ProductApiService extends ApiService {
     // return this.client.get(`${this.baseUrl}/`);
     return this._getList<T>(query);
   }
+  
 }
 
 export const productApiService = new ProductApiService();
