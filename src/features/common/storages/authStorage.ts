@@ -39,9 +39,8 @@ class LocalStorageAuthService {
   getAccessTokenExpiredAt(): number {
     return +storage.getLocalStorage(AUTH_SERVICE_KEY.ACCESS_TOKEN_EXPIRED_AT);
   }
-  setAccessTokenExpiredAt(expiredIn: number): void {
-    const expiredAt = new Date().getTime() + expiredIn * 1000 - BUFFER_TIME;
-    storage.setLocalStorage(AUTH_SERVICE_KEY.ACCESS_TOKEN_EXPIRED_AT, String(expiredAt));
+  setAccessTokenExpiredAt(expiredIn: string): void {
+    storage.setLocalStorage(AUTH_SERVICE_KEY.ACCESS_TOKEN_EXPIRED_AT, expiredIn);
   }
   resetAccessTokenExpiredAt(): void {
     storage.setLocalStorage(AUTH_SERVICE_KEY.ACCESS_TOKEN_EXPIRED_AT, '');

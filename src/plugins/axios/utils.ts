@@ -25,8 +25,9 @@ export const sendRefreshToken = async () => {
     console.log(response.data?.access_Token);
 
     if (response?.status === HttpStatus.OK) {
-      localStorageAuthService.setAccessToken(response.data?.data.access_Token);
-      // localStorageAuthService.setAccessTokenExpiredAt(response.data?.data.expiresIn);
+      localStorageAuthService.setAccessToken(response.data?.access_Token);
+      localStorageAuthService.setAccessTokenExpiredAt(response.data?.time_Token)
+      localStorageAuthService.setRefreshToken(response.data?.refresh_Token);
       return;
     }
     logout(true);

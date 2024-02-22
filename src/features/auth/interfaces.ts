@@ -11,7 +11,7 @@ export type IBodyLogin = {
 export type ILoginResponse = {
   access_Token: string;
   refresh_Token: string;
-  expiresIn: number;
+  time_Token: string;
 };
 export interface IUserActiveAccountBody {
   code: string;

@@ -18,6 +18,7 @@ export const useAuthStore = () => {
 
     if (res.success) {
       localStorageAuthService.setAccessToken(res.data?.access_Token);
+      localStorageAuthService.setAccessTokenExpiredAt(res.data?.time_Token)
       localStorageAuthService.setRefreshToken(res.data?.refresh_Token);
     }
     return res;
