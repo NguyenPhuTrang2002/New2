@@ -27,7 +27,7 @@ const ProductPage = () => {
           {
             page: 1,
             limit: 10,
-            // keyword: 'váy'
+            // keyword: 'váy' 
           }
         );
         console.log(res);

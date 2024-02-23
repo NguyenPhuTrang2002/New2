@@ -4,6 +4,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { productFormSchema } from '../../schemas/product.schema';
 import { IProduct, IProductFormCreate } from '../../features/common/interfaces';
 import { ProductApi } from '../../features/api';
+import { useDispatch } from 'react-redux';
+import { reLoad } from '../../features/action/reloadData';
+import { toast } from '../toast/toastmanager';
 
 interface ProductsProps {
   id: string;
@@ -13,8 +16,9 @@ const EditProducts = ({
   id,
   handleClose
 }: ProductsProps) => {
+  const dispatch = useDispatch();
   const { register, handleSubmit, formState: { errors } } = useForm<IProductFormCreate>({
-    // resolver: yupResolver(productFormSchema)
+    resolver: yupResolver(productFormSchema)
 
   });
 
@@ -58,6 +62,12 @@ const EditProducts = ({
       const resUpdate = await productApi.updateProduct(id, data);
       if (resUpdate.success) {
         handleClose();
+        dispatch(reLoad(true));
+        toast.show({
+          title: "Success",
+          content: "Cập nhật thành công !",
+          duration: 6000,
+        });
       } else {
       }
     } catch (error) {
@@ -74,7 +84,7 @@ const EditProducts = ({
               <p className="mb-2">Tên sản phẩm </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
             <input
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-2 rounded-md`}
+              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-2 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'} `}
               type="text"
               placeholder="Nhập Tên Sản Phẩm"
               defaultValue={selectUpdate.name}
@@ -84,7 +94,7 @@ const EditProducts = ({
               <p className="mb-2">Giá </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
             <input
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-2 rounded-md`}
+              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-2 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'} `}
               type="text"
               placeholder="Nhập Giá Của Sản Phẩm"
               defaultValue={selectUpdate.price}
@@ -94,7 +104,7 @@ const EditProducts = ({
               <p className="mb-2">Số lượng </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
             <input
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-2 rounded-md`}
+              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-2 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'} `}
               type="text"
               placeholder="Nhập Số Lượng Sản Phẩm"
               defaultValue={selectUpdate.quantity}
@@ -105,7 +115,7 @@ const EditProducts = ({
             </div>
             <textarea
               rows={5}
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-1 rounded-md`}
+              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-1 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'}`}
               placeholder="Nhập mô tả"
               defaultValue={selectUpdate.description}
               {...register('description')}
@@ -114,7 +124,7 @@ const EditProducts = ({
               <p className="mb-2">Ảnh sản Phẩm </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
             <input
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-5 rounded-md`}
+              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-5 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'} `}
               type="text"
               placeholder="Nhập link ảnh sản phẩm"
               defaultValue={selectUpdate.image}

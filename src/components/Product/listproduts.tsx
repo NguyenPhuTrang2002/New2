@@ -5,7 +5,6 @@ import { reLoad } from "../../features/action/reloadData";
 import { IProductFormCreate } from "../../features/common/interfaces";
 import EditProducts from "./editproduts";
 
-
 interface ListProductsProps {
   id: string;
   title: string;
@@ -27,41 +26,13 @@ const ListProducts = ({
   const dispatch = useDispatch();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [active, setActive] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false); // State để kiểm soát việc hiển thị confirm dialog
+
   const handleCancel = () => {
     setActive(false);
   };
 
-  // const editProduct: (productId: string, newData: any) => Promise<any> = async (productId, newData) => {
-  //   try {
-  //     const productApi = ProductApi();
-  //     const res = await productApi.updateProduct(productId, newData);
-  //     return res;
-  //   } catch (error) {
-  //     console.error('Error editing product:', error);
-  //     throw error;
-  //   }
-  // };
-
   const handleEditProduct = async () => {
-    // console.log('Editing product:', id);
-    // try {
-    //   const newData = {
-    //     name: 'New Product Name',
-    //     price: 'New Price',
-    //     quantity: 'New Quantity',
-    //     description: 'New Description',
-    //     image: 'New Image URL'
-    //   };
-    //   const res = await editProduct(id, newData);
-    //   if (res.success) {
-    //   } else {
-    //     console.error('Failed to edit product:', res.error);
-    //   }
-    // } catch (error) {
-    //   console.error('Error editing product:', error);
-    // }
-    // dispatch(reLoad(true));
-
     setIsFormOpen(true); // Mở form chỉnh sửa khi chỉnh sửa thành công
   };
 
@@ -69,7 +40,7 @@ const ListProducts = ({
     try {
       const productApi = ProductApi();
       const res = await productApi.deleteProduct(productId);
-      return res; // Trả về kết quả để sử dụng trong handleDeleteProduct
+      return res;
     } catch (error) {
       console.error('Error deleting product:', error);
       throw error;
@@ -78,6 +49,10 @@ const ListProducts = ({
 
   const handleDeleteProduct = async () => {
     console.log('id: ', id);
+    setShowConfirm(true); // Hiển thị confirm dialog khi người dùng nhấn vào icon xóa
+  };
+
+  const confirmDeleteProduct = async () => {
     try {
       const res = await deleteProduct(id);
       if (res.success) {
@@ -88,6 +63,7 @@ const ListProducts = ({
     } catch (error) {
       console.error('Error deleting product:', error);
     }
+    setShowConfirm(false); // Ẩn confirm dialog sau khi xác nhận xóa
   };
 
   return (
@@ -124,8 +100,19 @@ const ListProducts = ({
           <EditProducts id={id} handleClose={handleCancel} />
         )
       }
+      {showConfirm && (
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-5 rounded-lg">
+            <p className="text-xl">Bạn có chắc chắn muốn xóa sản phẩm này?</p>
+            <div className="flex justify-between mt-5">
+              <button className="px-4 py-2 bg-gray-300 rounded-md" onClick={() => setShowConfirm(false)}>Hủy</button>
+              <button className="px-4 py-2 bg-red-500 text-white rounded-md" onClick={confirmDeleteProduct}>Xóa</button>
+            </div>
+          </div>
+        </div>
+      )}
     </tr>
-  )
+  );
 };
 
 export default ListProducts;
