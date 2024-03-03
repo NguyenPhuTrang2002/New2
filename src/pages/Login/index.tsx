@@ -1,6 +1,6 @@
 import React from "react"
 import Login from "../../components/Login"
-const index: React.FC = () => {
+const index = ({ }) => {
   return (
     <div className="min-h-screen overflow-y-auto bg-[#fff]">
       <Login />

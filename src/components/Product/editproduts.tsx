@@ -6,7 +6,7 @@ import { IProduct, IProductFormCreate } from '../../features/common/interfaces';
 import { ProductApi } from '../../features/api';
 import { useDispatch } from 'react-redux';
 import { reLoad } from '../../features/action/reloadData';
-import { toast } from '../toast/toastmanager';
+import { toast } from "react-toastify";
 
 interface ProductsProps {
   id: string;
@@ -17,10 +17,11 @@ const EditProducts = ({
   handleClose
 }: ProductsProps) => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, formState: { errors } } = useForm<IProductFormCreate>({
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<IProductFormCreate>({
     resolver: yupResolver(productFormSchema)
-
   });
+  // console.log(errors);
+
 
   const [selectUpdate, setSelectUpdate] = useState({
     id: id,
@@ -30,23 +31,20 @@ const EditProducts = ({
     description: '',
     image: ''
   });
-  console.log(id);
+
+  // console.log(id);
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
         const productApi = ProductApi();
         const res = await productApi.getProductDetails(id);
-        console.log(res);
         if (res.success) {
-          const { id, name, price, quantity, description, image } = res.data;
-          setSelectUpdate({
-            id,
-            name,
-            price,
-            quantity,
-            description,
-            image
-          });
+          const { name, price, quantity, description, image } = res.data;
+          setValue('name', name);
+          setValue('price', price);
+          setValue('quantity', quantity);
+          setValue('description', description);
+          setValue('image', image);
         }
       } catch (error) {
         console.error('Error fetching product details:', error);
@@ -54,19 +52,19 @@ const EditProducts = ({
     };
 
     fetchProductDetails();
-  }, [id]);
+  }, [id, setValue]);
 
   const onSubmitUpdate: SubmitHandler<IProductFormCreate> = async (data) => {
+    console.log("data: ", data);
     try {
       const productApi = ProductApi();
       const resUpdate = await productApi.updateProduct(id, data);
       if (resUpdate.success) {
         handleClose();
         dispatch(reLoad(true));
-        toast.show({
-          title: "Success",
-          content: "Cập nhật thành công !",
-          duration: 6000,
+        toast.success("Cập nhập thông tin sản phẩm thành công !", {
+          position: "top-right",
+          autoClose: 5000,
         });
       } else {
       }
@@ -84,52 +82,61 @@ const EditProducts = ({
               <p className="mb-2">Tên sản phẩm </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
             <input
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-2 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'} `}
+              className={`border w-full border-gray-200 py-3 pl-4 mb-2 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'} `}
               type="text"
               placeholder="Nhập Tên Sản Phẩm"
-              defaultValue={selectUpdate.name}
+              defaultValue={selectUpdate?.name}
               {...register('name')}
             />
+            <span className='mb-5 text-red-500'>{errors.name?.message}</span>
+
             <div className="flex">
               <p className="mb-2">Giá </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
             <input
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-2 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'} `}
+              className={`border w-full border-gray-200 py-3 pl-4 mb-2 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'} `}
               type="text"
               placeholder="Nhập Giá Của Sản Phẩm"
-              defaultValue={selectUpdate.price}
+              defaultValue={selectUpdate?.price}
               {...register('price')}
             />
+            <span className='mb-5 text-red-500'>{errors.price?.message}</span>
             <div className="flex">
               <p className="mb-2">Số lượng </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
             <input
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-2 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'} `}
+              className={`border w-full border-gray-200 py-3 pl-4 mb-2 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'} `}
               type="text"
               placeholder="Nhập Số Lượng Sản Phẩm"
-              defaultValue={selectUpdate.quantity}
+              defaultValue={selectUpdate?.quantity}
               {...register('quantity')}
             />
+            <span className='mb-5 text-red-500'>{errors.quantity?.message}</span>
+
             <div className="flex">
               <p className="mb-2">Mô tả </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
             <textarea
               rows={5}
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-1 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'}`}
+              className={`border w-full border-gray-200 py-3 pl-4 mb-1 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'}`}
               placeholder="Nhập mô tả"
-              defaultValue={selectUpdate.description}
+              defaultValue={selectUpdate?.description}
               {...register('description')}
             />
+            <span className='mb-5 text-red-500'>{errors.description?.message}</span>
+
             <div className="flex">
               <p className="mb-2">Ảnh sản Phẩm </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
             <input
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-5 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'} `}
+              className={`border w-full border-gray-200 py-3 pl-4 mb-2 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'} `}
               type="text"
               placeholder="Nhập link ảnh sản phẩm"
-              defaultValue={selectUpdate.image}
+              defaultValue={selectUpdate?.image}
               {...register('image')}
             />
+            <span className='mb-5 text-red-500'>{errors.image?.message}</span>
+
           </div>
 
           <div className="px-5 flex gap-4 justify-end items-center h-[70px] bg-[#fff] rounded-b-lg">

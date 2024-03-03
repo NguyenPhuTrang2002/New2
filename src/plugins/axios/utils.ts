@@ -3,15 +3,14 @@ import localStorageAuthService from '../../features/common/storages/authStorage'
 import axios from 'axios';
 
 export const logout = (redirectToLogin = true) => {
-  // localStorageAuthService.resetAll();
-  // const currentPage = router.currentRoute;
-  // if (redirectToLogin && currentPage.value.name !== PageName.LOGIN_PAGE) {
-  //   sessionStorage.setItem('redirect', currentPage.value.fullPath);
-  //   router
-  //     .push({ name: PageName.LOGIN_PAGE })
-  //     // eslint-disable-next-line @typescript-eslint/no-empty-function
-  //     .catch(() => {});
-  // }
+  localStorageAuthService.resetAll();
+  if (redirectToLogin) {
+    const currentPage = sessionStorage.getItem('redirect') || '/';
+    if (currentPage !== PageName.LOGIN_PAGE) {
+      sessionStorage.setItem('redirect', currentPage);
+      window.location.href = PageName.LOGIN_PAGE;
+    }
+  }
 };
 
 export const sendRefreshToken = async () => {
@@ -22,12 +21,16 @@ export const sendRefreshToken = async () => {
     response = await axios.post(`${API_URL}/auth/refresh-token`, {
       refresh_Token: refreshToken
     });
-    console.log(response.data?.access_Token);
 
-    if (response?.status === HttpStatus.OK) {
-      localStorageAuthService.setAccessToken(response.data?.access_Token);
-      localStorageAuthService.setAccessTokenExpiredAt(response.data?.time_Token)
-      localStorageAuthService.setRefreshToken(response.data?.refresh_Token);
+    console.log(
+      response
+    );
+
+
+    if (response?.status === 200) {
+      localStorageAuthService.setAccessToken(response.data?.data.access_Token);
+      localStorageAuthService.setAccessTokenExpiredAt(response.data?.data.time_Token)
+      localStorageAuthService.setRefreshToken(response.data?.data.refresh_Token);
       return;
     }
     logout(true);

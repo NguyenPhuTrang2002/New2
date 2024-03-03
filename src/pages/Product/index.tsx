@@ -1,48 +1,47 @@
-// ProductPage.js
 import { useEffect, useState } from "react";
 import Product from "../../components/Product";
 import { ProductApi } from "../../features/api/product";
 import { RootState } from "../../features/common/interfaces";
-import { useSelector } from "react-redux";
-interface ProductType {
-  title: string;
-  price: string;
-  total: string;
-  description: string;
-  img: string;
-}
+import { useDispatch, useSelector } from "react-redux";
+
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
-  const reload = useSelector((state: RootState) => state.reload)
-  console.log(reload);
-
-
+  const reload = useSelector((state: RootState) => state.reload);
+  const dispatch = useDispatch();
+  const [totalPages, setTotalPages] = useState(0);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [limit, setLimit] = useState(); // State để lưu giá trị limit
+  const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const productApi = ProductApi();
-        // console.log((await productApi.getAllProducts()).data.items);
-        // setProducts((await productApi.getAllProducts()).data.items);
-        const res = await productApi.getAllProducts(
-          {
-            page: 1,
-            limit: 10,
-            // keyword: 'váy' 
-          }
-        );
-        console.log(res);
+        const res = await productApi.getAllProducts({
+          page: currentPage,
+          limit: limit,
+          keyword: searchKeyword,
+        });
+        setTotalPages(res.data.totalItems);
         setProducts(res.data.items);
-
       } catch (error) {
         console.log(error);
       }
     };
+    console.log("LM", limit)
     fetchProducts();
-  }, [reload]);
+  }, [reload, setTotalPages, searchKeyword, limit, currentPage]); // Thêm limit vào dependency array
+  console.log("Current Page", currentPage);
+  const handleKeywordChange = (newKeyword: string) => {
+    setSearchKeyword(newKeyword);
+  };
 
   return (
     <div className="min-h-screen overflow-y-auto bg-[#fff]">
-      <Product ListProduct={products} />
+      <Product
+        totalPages={totalPages}
+        ListProduct={products}
+        onKeywordChange={handleKeywordChange}
+      />
     </div>
   );
 }

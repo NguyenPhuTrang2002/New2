@@ -7,11 +7,13 @@ export type IBodyLogin = {
   // code?: string;
   // redirectUri?: string;
 };
-
+export type IBodyProfile = {
+  access_Token: string;
+}
 export type ILoginResponse = {
   access_Token: string;
   refresh_Token: string;
-  time_Token: string;
+  time_Token: number;
 };
 export interface IUserActiveAccountBody {
   code: string;

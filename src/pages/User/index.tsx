@@ -2,43 +2,44 @@
 import React, { useEffect, useState } from 'react';
 import User from '../../components/User';
 import { UserApi } from '../../features/api/user';
-interface UserType {
-  avatar: string;
-  name: string;
-  email: string;
-  birthday: string;
-  phone: string;
-}
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../features/common/interfaces';
 
 const UserPage = () => {
   const [users, setUsers] = useState([]);
+  const reload = useSelector((state: RootState) => state.reload);
+  const dispatch = useDispatch();
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [limit, setLimit] = useState(); // State để lưu giá trị limit
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const productApi = UserApi();
-        // console.log((await userApi.getAllUsers()).data.items);
-        // setProducts((await userApi.getAllUsers()).data.items);
         const res = await productApi.getAllUsers(
           {
-            page: 1,
-            limit: 10
+            page: currentPage,
+            limit: 100,
+            keyword: searchKeyword,
           }
         );
-        console.log(res);
         setUsers(res.data.items);
-
       } catch (error) {
         console.log(error);
       }
     };
     fetchUsers();
-  }, []);
+  }, [reload, searchKeyword, limit, currentPage]);
 
-
+  const handleKeywordChange = (newKeyword: string) => {
+    setSearchKeyword(newKeyword);
+  };
   return (
     <div className="min-h-screen overflow-y-auto bg-[#fff]">
-      <User ListUser={users} />
+      <User
+        onKeywordChange={handleKeywordChange}
+        ListUser={users} />
     </div>
   );
 };

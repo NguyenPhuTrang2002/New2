@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { ProductApi } from "../../features/api/product";
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IProductFormCreate } from '../../features/common/interfaces';
@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { productFormSchema } from '../../schemas/product.schema';
 import { useDispatch } from 'react-redux';
 import { reLoad } from '../../features/action/reloadData';
-import { toast } from "../../components/toast/toastmanager";
+import { toast } from "react-toastify";
 
 
 interface ProductsProps {
@@ -17,7 +17,6 @@ const Products = ({
 }: ProductsProps) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const dispatch = useDispatch();
-
   const { register, handleSubmit, formState: { errors } } = useForm<IProductFormCreate>({
     resolver: yupResolver(productFormSchema)
   });
@@ -39,12 +38,17 @@ const Products = ({
       dispatch(reLoad(true));
       setIsFormOpen(false);
     }
-    toast.show({
-      title: "Success",
-      content: "Thêm mới thành công !",
-      duration: 6000,
+    toast.success("Thêm mới sản phẩm thành công !", {
+      position: "top-right",
+      autoClose: 5000,
     });
   }
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSubmit(onSubmitCreate)();
+    }
+  };
   return (
 
     <div className="fixed top-0 left-0 right-0 bottom-0 overflow-y-auto">
@@ -56,7 +60,7 @@ const Products = ({
               <p className="mb-2">Tên sản phẩm </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
             <input
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-2 rounded-md
+              className={`border w-full border-gray-200 py-3 pl-4 mb-2 rounded-md
               ${errors.name ? 'border-red-300' : 'border-gray-200'}
              `}
               type="text"
@@ -68,7 +72,7 @@ const Products = ({
               <p className="mb-2">Giá </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
             <input
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-2 rounded-md
+              className={`border w-full border-gray-200 py-3 pl-4 mb-2 rounded-md
               ${errors.price ? 'border-red-300' : 'border-gray-200'}
              `}
               type="text"
@@ -80,7 +84,7 @@ const Products = ({
               <p className="mb-2">Số lượng </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
             <input
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-2 rounded-md
+              className={`border w-full border-gray-200 py-3 pl-4 mb-2 rounded-md
               ${errors.quantity ? 'border-red-300' : 'border-gray-200'}
              `}
               type="text"
@@ -93,7 +97,7 @@ const Products = ({
             </div>
             <textarea
               rows={5}
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-1 rounded-md
+              className={`border w-full border-gray-200 py-3 pl-4 mb-1 rounded-md
               ${errors.description ? 'border-red-300' : 'border-gray-200'}
               `}
               placeholder="Nhập mô tả"
@@ -104,12 +108,13 @@ const Products = ({
               <p className="mb-2">Ảnh sản Phẩm </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
             <input
-              className={`border w-full border-gray-200 leading-5 py-3 pl-4 mb-5 rounded-md
+              className={`border w-full border-gray-200 py-3 pl-4 mb-5 rounded-md
               ${errors.image ? 'border-red-300' : 'border-gray-200'}
              `}
               type="text"
               placeholder="Nhập link ảnh sản phẩm"
               {...register('image')}
+              onKeyPress={handleKeyPress}
             />
             <span className=" mb-2 text-red-500">{errors.image?.message}</span>
           </div>

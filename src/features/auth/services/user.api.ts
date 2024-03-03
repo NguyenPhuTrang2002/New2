@@ -1,11 +1,11 @@
 import { type IBodyResponse } from '../../common/interfaces';
 import axiosInstance from '../../../plugins/axios';
 import { ApiService } from '../../../plugins/axios/api';
-import type { IUserUpdatePassword } from '../interfaces';
+import type { IBodyProfile, IUserUpdatePassword } from '../interfaces';
 import { type IUserChangePassword } from './../interfaces';
 class UserApiService extends ApiService {
-  _getOwnProfile<R>(): Promise<R> {
-    return this.client.get<R, R>(`${this.baseUrl}/my-profile`);
+  _getOwnProfile(access_token: { access_token: string }): Promise<IBodyResponse<any>> {
+    return this.client.post(`auth/profile`, access_token);
   }
 
   updatePassword(body: IUserUpdatePassword): Promise<IBodyResponse<any>> {

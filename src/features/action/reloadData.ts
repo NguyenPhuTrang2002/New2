@@ -1,6 +1,3 @@
 export const reLoad = (reload: boolean) => {
-  return {
-    type: "RELOAD",
-    payload: reload
-  }
+  return { type: "RELOAD", payload: reload }
 }

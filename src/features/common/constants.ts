@@ -1,5 +1,5 @@
 export enum PageName {
-  LOGIN_PAGE = 'login_page',
+  LOGIN_PAGE = 'login',
   DASHBOARD_PAGE = 'dashboard_page',
   NOT_FOUND_PAGE = 'not_found_page',
   FORBIDDEN_PAGE = 'forbidden_page',
@@ -66,12 +66,17 @@ export enum DATE_TIME_FORMAT {
 export const FORM_VALIDATION = {
   textMinLength: 3,
   textMaxLength: 255,
-  nameMaxLength: 64,
+  nameMaxLength: 30,
   codeMaxLength: 10,
   textAreaMaxLength: 2000,
   passwordMinLength: 6,
   passwordMaxLength: 20,
-  numberRegExp: /^[0-9]+$/,
+  phoneMinLength: 10,
+  phoneMaxLength: 10,
+  urlMinLength: 1,
+  urlMaxLength: 150,
+  numberRegExp: /^[0-9]+(\.[0-9]+)?$/,
+  numberPrice: /^(?!0+(\.[0]+)?$)[0-9]+(\.[0-9]+)?$/,
   phoneRegExp: /^(((\+)84)|0)(3|5|7|8|9)([0-9]{3,13})/,
   nameRegExp: /^([^!@`~#$:%^*&().<>?\\/\\+|=]+?)$/,
   specialCharacters: /[~`!@#$%^&*()+={}[\];:'"<>.,/\\?-_]/g,
@@ -86,11 +91,14 @@ export const Regex = {
   /* eslint-disable no-useless-escape */
   EMAIL:
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-  NAME: /^[^[\]\\|'";:/?.>,<)(_=+!@#$%^&*`~0-9-]+$/,
+  NAME: /^\p{L}{1,}[\p{L}\p{N}\p{M}\p{Pc}\p{Zs}]*$/u,
+  DES: /^[\p{L}\p{N}]{3,}[\p{L}\p{N}\p{M}\p{Pc}\p{Zs}]*$/u,
   PASSWORD: /^(?=.*[a-zA-z])(?=.*\d).{8,}$/,
   COLOR: /^#(?:[0-9a-fA-F]{3}){1,2}$/,
+  PHONE: /^[0-9]+$/,
   TIME: /^(([0-1]\d{0,1})|(2[0-3]{0,1})):[0-5]\d{0,1}$/,
   URL: /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/,
+  DATE_OF_BIRTH: /^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/,
 };
 
 export const SORT_DIRECTION_ICON = {

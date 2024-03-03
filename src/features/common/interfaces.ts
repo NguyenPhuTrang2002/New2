@@ -110,8 +110,17 @@ export interface IProduct {
 }
 
 export interface RootState {
+  keyword: string;
   reload: boolean;
+  limit: number;
 }
 
+export interface IUserFromCreate {
+  name: string;
+  email: string;
+  birthday: string;
+  phone: string;
+  avatar: string;
+}
 
 
