@@ -9,7 +9,6 @@ import Page from "../Layout/Navigation/page";
 import ListProducts from "./listproduts";
 
 interface Props {
-  totalPages: number;
   ListProduct: any;
   onKeywordChange: (newKeyword: string) => void;
 }
@@ -53,6 +52,8 @@ const Product = ({ ListProduct, onKeywordChange }: Props) => {
   };
 
   const totalPages = Math.ceil(ListProductArray.length / numberOfRows);
+  console.log(totalPages);
+
   const startIndex = (currentPage - 1) * numberOfRows;
   const endIndex = startIndex + numberOfRows;
   const currentProductPage = ListProductArray.slice(startIndex, endIndex);
@@ -84,7 +85,7 @@ const Product = ({ ListProduct, onKeywordChange }: Props) => {
               <thead>
                 <tr className="text-[13px] border-b border-gray-300 h-[60px]">
                   <th className="text-[#8B909A] text-[13px] font-medium text-center">TÊN SẢN PHẨM</th>
-                  <th className="text-[#8B909A] text-[13px] font-medium text-center">GIÁ</th>
+                  <th className="text-[#8B909A] text-[13px] font-medium text-left">GIÁ</th>
                   <th className="text-[#8B909A] text-[13px] font-medium text-center">SỐ LƯỢNG</th>
                   <th className="text-[#8B909A] text-[13px] font-medium text-left pl-10">MÔ TẢ</th>
                   <th className="text-[#8B909A] text-[13px] font-medium text-center">ẢNH</th>

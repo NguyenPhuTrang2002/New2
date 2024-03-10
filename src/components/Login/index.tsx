@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLoginForm } from "../../features/auth/forms/login-form";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const { register, handleSubmit, errors, onSubmit, } = useLoginForm();
@@ -61,16 +62,14 @@ const Login = () => {
       <button
         className="bg-[#0F60FF] text-[#fff] w-[425px] leading-[45px] rounded-md mb-5 "
         type="submit"
-        onClick={handleSubmit(onSubmit)} // Thực hiện handleSubmit khi nhấn nút
+        onClick={handleSubmit(onSubmit)}
       >
         Đăng Nhập
       </button>
       <div className="flex">
         <p>Bạn chưa có tài khoản ? </p>
-        <a className="text-[#0F60FF] ml-2" href="/register" target="_blank">Đăng ký</a>
+        <Link className="text-[#0F60FF] ml-2" to="/register">Đăng ký</Link>
       </div>
-
-      {/* ToastContainer để hiển thị toast message */}
       <ToastContainer />
     </div>
   );

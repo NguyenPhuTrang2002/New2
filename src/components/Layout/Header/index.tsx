@@ -11,10 +11,6 @@ const Header = ({ title }: HeaderProps) => {
   const [avtOptions, setAvtOptions] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
-  const handleAvtClick = () => {
-    setAvtOptions(!avtOptions);
-  };
 
   const handleSubmit = () => {
     setShowConfirm(true);
@@ -33,9 +29,7 @@ const Header = ({ title }: HeaderProps) => {
     _getOwnProfile({
       access_token: access_token
     });
-  }, [_getOwnProfile, access_token]);
-
-
+  }, []);
 
   return (
     <div className="flex justify-center items-center mb-[25px]" ref={headerRef}>
@@ -47,12 +41,12 @@ const Header = ({ title }: HeaderProps) => {
       <div className="relative">
         <div className="group ">
           <div className=" h-[50px] flex justify-center items-center mt-2 ">
-            <img onClick={handleAvtClick} className="cursor-pointer mr-1 rounded-3xl w-[38px] h-[38px] group" src={avatar} alt="Avatar" />
+            <img className="cursor-pointer mr-1 rounded-3xl w-[38px] h-[38px] group" src={avatar} alt="Avatar" />
             <img className="absolute mb-2 bottom-0 right-0" src="./icons/status.svg" alt="status" />
           </div>
           {/* {avtOptions && ( */}
           <div
-            className="hidden group-hover:flex absolute top-[7px] right-0 z-10 w-[165px] rounded-md bg-[#0F60FF] flex-col justify-center items-center space-y-2 p-4 mt-[50px]
+            className="hidden group-hover:flex absolute top-[15px] right-0 z-10 w-[165px] rounded-md bg-[#0F60FF] flex-col justify-center items-center space-y-2 p-4 mt-[50px]
             after:content-[''] after:h-[10px] after:w-[10px] after:z-20 after:border-l-[20px] after:border-l-transparent after:border-solid after:border-b-[20px] 
             after:border-r-[20px] after:border-r-transparent after:border-b-[#0F60FF] after:top-[-10px] after:right-[0px] after:absolute
             ">

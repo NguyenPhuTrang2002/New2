@@ -8,7 +8,6 @@ import { RootState } from '../../features/common/interfaces';
 const UserPage = () => {
   const [users, setUsers] = useState([]);
   const reload = useSelector((state: RootState) => state.reload);
-  const dispatch = useDispatch();
   const [searchKeyword, setSearchKeyword] = useState("");
   const [limit, setLimit] = useState(); // State để lưu giá trị limit
   const [currentPage, setCurrentPage] = useState(1);

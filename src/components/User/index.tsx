@@ -79,13 +79,13 @@ const User = ({ ListUser, onKeywordChange }: Props) => {
                 <tr className="text-[13px] border-b border-gray-300 h-[60px]">
                   <th className="text-[#8B909A] text-[13px] font-medium text-center">AVATAR</th>
                   <th className="text-[#8B909A] text-[13px] font-medium text-center">TÊN NGƯỜI DÙNG</th>
-                  <th className="text-[#8B909A] text-[13px] font-medium text-left pl-10">EMAIL</th>
+                  <th className="text-[#8B909A] text-[13px] font-medium text-center">EMAIL</th>
                   <th className="text-[#8B909A] text-[13px] font-medium text-center">NGÀY SINH</th>
                   <th className="text-[#8B909A] text-[13px] font-medium text-center">ĐIỆN THOẠI</th>
                   <th className="text-[#8B909A] text-[13px] font-medium text-center">HÀNH ĐỘNG</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody style={{ maxHeight: '400px', overflowY: 'auto' }}>
                 {currentProductPage.map((user: UserArray) => (
                   <Listusers
                     id={user.id}

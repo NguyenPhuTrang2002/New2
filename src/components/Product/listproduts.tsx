@@ -74,15 +74,17 @@ const ListProducts = ({
 
   return (
     <tr className="border-b border-gray-300">
-      <td className="text-center">{title}</td>
-      <td className="text-center">{price}</td>
+      <td className="text-left px-5 max-w-[100px] whitespace-normal">{title}</td>
+      <td className="text-left">${price}</td>
       <td className="text-center">{total}</td>
-      <td className="text-left pl-10">{description}</td>
-      <td className="flex justify-center it py-[13px]">
-        <img className="h-[36px] w-[36px]" src={img} alt="Product" />
+      <td className="text-left pl-10 max-w-[100px] whitespace-normal">{description}</td>
+      <td className="text-center">
+        <div className="flex justify-center items-center">
+          <img className="h-[36px] w-[36px]" src={img} alt="Product" />
+        </div>
       </td>
-      <td className="">
-        <div className="w-full h-full flex justify-center items-center gap-[10px] px-5 py-[13px]">
+      <td className="text-center">
+        <div className="flex justify-center items-center gap-[10px] px-5 py-[13px]">
           <div onClick={() => { setActive(true); handleEditProduct(); }}>
             <img className="cursor-pointer" src="./icons/edit.svg" alt="Edit" />
           </div>
@@ -91,6 +93,7 @@ const ListProducts = ({
           </div>
         </div>
       </td>
+
       {
         active && (
           <EditProducts id={id} handleClose={handleCancel} />

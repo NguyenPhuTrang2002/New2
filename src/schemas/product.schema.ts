@@ -5,7 +5,7 @@ const nameSchema = yup
   .string()
   .required('Tên Sản Phẩm là trường bắt buộc !')
   .min(FORM_VALIDATION.textMinLength, 'Tên sản phẩm không được quá ít ký tự !')
-  .max(FORM_VALIDATION.nameMaxLength, 'Tên sản phẩm không được dài quá !')
+  .max(FORM_VALIDATION.textMaxLength, 'Tên sản phẩm không được dài quá !')
   .matches(Regex.NAME, 'Sai định dạng văn bản !');
 
 const priceSchema = yup
@@ -28,7 +28,6 @@ const descriptionSchema = yup
   .required('Mô tả Sản Phẩm là trường bắt buộc !')
   .min(FORM_VALIDATION.textMinLength, 'Miêu tả sản phẩm không được quá ít ký tự !')
   .max(FORM_VALIDATION.textMaxLength, 'Miêu tả sản phẩm không được dài quá !')
-  .matches(Regex.DES, 'Sai định dạng văn bản !');
 
 const imageSchema = yup
   .string()

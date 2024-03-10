@@ -66,7 +66,6 @@ export enum DATE_TIME_FORMAT {
 export const FORM_VALIDATION = {
   textMinLength: 3,
   textMaxLength: 255,
-  nameMaxLength: 30,
   codeMaxLength: 10,
   textAreaMaxLength: 2000,
   passwordMinLength: 6,
@@ -74,7 +73,7 @@ export const FORM_VALIDATION = {
   phoneMinLength: 10,
   phoneMaxLength: 10,
   urlMinLength: 1,
-  urlMaxLength: 150,
+  urlMaxLength: 200,
   numberRegExp: /^[0-9]+(\.[0-9]+)?$/,
   numberPrice: /^(?!0+(\.[0]+)?$)[0-9]+(\.[0-9]+)?$/,
   phoneRegExp: /^(((\+)84)|0)(3|5|7|8|9)([0-9]{3,13})/,
@@ -91,8 +90,8 @@ export const Regex = {
   /* eslint-disable no-useless-escape */
   EMAIL:
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-  NAME: /^\p{L}{1,}[\p{L}\p{N}\p{M}\p{Pc}\p{Zs}]*$/u,
-  DES: /^[\p{L}\p{N}]{3,}[\p{L}\p{N}\p{M}\p{Pc}\p{Zs}]*$/u,
+  NAME: /^\p{L}{1,}[\p{L}\p{N}\p{M}\p{Pc}\p{Zs}&.!,-]*$/u,
+  DES: /^[\p{L}\p{N},.\s-]+$/u,
   PASSWORD: /^(?=.*[a-zA-z])(?=.*\d).{8,}$/,
   COLOR: /^#(?:[0-9a-fA-F]{3}){1,2}$/,
   PHONE: /^[0-9]+$/,

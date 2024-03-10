@@ -69,7 +69,7 @@ const Listusers = ({ id, avatar, name, email, birthday, phone }: ListitemsProps)
         <img className="w-[36px] h-[36]" src={avatar} alt="User" />
       </td>
       <td className="text-center">{name}</td>
-      <td className="text-left pl-10">{email}</td>
+      <td className="text-center">{email}</td>
       <td className="text-center">{birthday}</td>
       <td className="text-center">{phone}</td>
       <td className="">

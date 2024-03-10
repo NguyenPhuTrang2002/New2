@@ -1,7 +1,6 @@
 import { avatar } from './../../action/avatar';
 import { email } from '../../action/email';
 import { userApiService } from "../services";
-import { IBodyProfile } from "../interfaces";
 import { useDispatch } from "react-redux";
 export const useUserStore = () => {
   const dispatch = useDispatch();

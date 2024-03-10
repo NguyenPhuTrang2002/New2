@@ -61,7 +61,7 @@ const AddUsers = ({ handleClose }: UsersProps) => {
       <div className="w-full min-h-full flex items-center justify-center bg-opacity-50 bg-gray-500">
         <div className="bg-[#fff] flex flex-col w-[440px] rounded-xl ">
           <h1 className="text-[18px] font-medium px-4 py-5">Tạo mới người dùng</h1>
-          <div className="w-full bg-[#F7F8FA] rounded-b-lg h-auto px-4">
+          <div className="w-full bg-[#F7F8FA] rounded-b-lg h-auto px-4 pb-3">
             <div className="flex mt-[16px]">
               <p className="mb-2">Tên người dùng </p><p className="ml-1 text-[#0f60ff]"> *</p>
             </div>
