@@ -34,7 +34,7 @@ const Header = ({ title }: HeaderProps) => {
   return (
     <div className="flex justify-center items-center mb-[25px]" ref={headerRef}>
       <h1 className="text-[#23272E] text-[24px] font-bold w-[100%]">{title}</h1>
-      <div className="relative mr-[24px]">
+      <div className="relative mr-[24px] mt-3">
         <img className="" src="./icons/bell.svg" alt="bell" />
         <span className="absolute flex flex-col rounded-lg w-4 h-4 text-[12px] text-[#fff] bg-[#EA5455] ml-3.5 justify-center items-center" style={{ top: '25%', transform: 'translateY(-50%)' }}>4</span>
       </div>

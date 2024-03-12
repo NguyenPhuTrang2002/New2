@@ -83,7 +83,7 @@ const EditUsers = ({
             <input
               className={`border w-full border-gray-200 py-3 pl-4 mb-2 rounded-md ${errors.name ? 'border-red-300' : 'border-gray-200'} `}
               type="text"
-              placeholder="Nhập Tên Sản Phẩm"
+              placeholder="Nhập Tên Người Dùng"
               defaultValue={selectUpdate?.name}
               {...register('name')}
             />
@@ -94,10 +94,12 @@ const EditUsers = ({
             <input
               className={`border w-full border-gray-200 py-3 pl-4 mb-2 rounded-md ${errors.email ? 'border-red-300' : 'border-gray-200'} `}
               type="text"
-              placeholder="Nhập Giá Của Sản Phẩm"
+              placeholder="Nhập Email Của Người Dùng"
               defaultValue={selectUpdate?.email}
               {...register('email')}
+              readOnly
             />
+
             <span className='mb-5 text-red-500'>{errors.email?.message}</span>
             <div className="flex">
               <p className="mb-2">Ngày sinh</p><p className="ml-1 text-[#0f60ff]"> *</p>
@@ -105,7 +107,7 @@ const EditUsers = ({
             <input
               className={`border w-full border-gray-200 py-3 pl-4 mb-2 rounded-md ${errors.birthday ? 'border-red-300' : 'border-gray-200'} `}
               type="text"
-              placeholder="Nhập Số Lượng Sản Phẩm"
+              placeholder="Nhập Ngày Sinh Người Dùng"
               defaultValue={selectUpdate?.birthday}
               {...register('birthday')}
             />
@@ -127,7 +129,7 @@ const EditUsers = ({
             <input
               className={`border w-full border-gray-200 py-3 pl-4 mb-2 rounded-md ${errors.avatar ? 'border-red-300' : 'border-gray-200'} `}
               type="text"
-              placeholder="Nhập link ảnh sản phẩm"
+              placeholder="Nhập Link Ảnh Avatar"
               defaultValue={selectUpdate?.avatar}
               {...register('avatar')}
             />

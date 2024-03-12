@@ -24,7 +24,7 @@ const Login = () => {
       <div className="flex flex-col">
         <p className="mb-2">Email :</p>
         <input
-          className={`border  w-[425px] h-[35px] pl-4
+          className={`border  w-[425px] h-[35px] pl-4 outline-none
           ${errors.email ? 'border-red-300' : 'border-gray-200'}
           `}
           type="text"
@@ -42,7 +42,7 @@ const Login = () => {
           <input
             className={`pl-4 pr-10 w-full outline-none`}
             type={`${showPass ? 'text' : 'password'}`}
-            placeholder=""
+            placeholder="••••••••••••••"
             {...register('password')}
             onKeyPress={handleKeyPress}
           />

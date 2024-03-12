@@ -7,10 +7,12 @@ import { useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import Page from "../Layout/Navigation/page";
 import ListProducts from "./listproduts";
+import Loading from "../Loading";
 
 interface Props {
   ListProduct: any;
   onKeywordChange: (newKeyword: string) => void;
+  loading: boolean;
 }
 
 interface ProductArray {
@@ -22,13 +24,12 @@ interface ProductArray {
   image: string;
 }
 
-const Product = ({ ListProduct, onKeywordChange }: Props) => {
+const Product = ({ ListProduct, onKeywordChange, loading }: Props) => {
   const dispatch = useDispatch();
   const [ListProductArray, setListProductArray] = useState<ProductArray[]>([]);
   const [numberOfRows, setNumberOfRows] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [active, setActive] = useState<boolean>(false);
-
   useEffect(() => {
     setListProductArray(ListProduct);
   }, [ListProduct]);
@@ -80,12 +81,12 @@ const Product = ({ ListProduct, onKeywordChange }: Props) => {
               <img className="cursor-pointer" src="./icons/add.svg" alt="addNew" />
             </div>
           </div>
-          <div className="w-full bg-white rounded-xl shadow-md max-h-[500px] overflow-y-auto">
+          <div className="w-full bg-white rounded-t-xl shadow-md max-h-[500px] overflow-y-auto">
             <table className="min-w-full table-fixed">
               <thead>
                 <tr className="text-[13px] border-b border-gray-300 h-[60px]">
                   <th className="text-[#8B909A] text-[13px] font-medium text-center">TÊN SẢN PHẨM</th>
-                  <th className="text-[#8B909A] text-[13px] font-medium text-left">GIÁ</th>
+                  <th className="text-[#8B909A] text-[13px] font-medium text-center">GIÁ</th>
                   <th className="text-[#8B909A] text-[13px] font-medium text-center">SỐ LƯỢNG</th>
                   <th className="text-[#8B909A] text-[13px] font-medium text-left pl-10">MÔ TẢ</th>
                   <th className="text-[#8B909A] text-[13px] font-medium text-center">ẢNH</th>
@@ -93,21 +94,30 @@ const Product = ({ ListProduct, onKeywordChange }: Props) => {
                 </tr>
               </thead>
               <tbody style={{ maxHeight: '400px', overflowY: 'auto' }}>
-                {currentProductPage.map((product: ProductArray) => (
-                  <ListProducts
-                    key={product.id}
-                    id={product.id}
-                    title={product.name}
-                    price={product.price}
-                    total={product.quantity}
-                    description={product.description}
-                    img={product.image}
-                  />
-                ))}
+                {loading ? (
+                  <tr>
+                    <td className="text-center py-4" colSpan={6}>
+                      <Loading />
+                    </td>
+                  </tr>
+                ) : (
+                  currentProductPage.map((product: ProductArray) => (
+                    <ListProducts
+                      key={product.id}
+                      id={product.id}
+                      title={product.name}
+                      price={product.price}
+                      total={product.quantity}
+                      description={product.description}
+                      img={product.image}
+                    />
+                  ))
+                )}
               </tbody>
+
             </table>
           </div>
-          <div className="flex justify-between py-4 px-6 overflow-y-auto mb-4">
+          <div className="flex justify-between py-4 px-6 overflow-y-auto mb-4 bg-white rounded-b-xl">
             <Navigation
               handleNumberOfRowsChange={handleNumberOfRowsChange}
               totalNumberOfProducts={ListProductArray.length}

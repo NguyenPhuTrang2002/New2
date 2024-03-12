@@ -27,7 +27,7 @@ const Navigation = ({ handleNumberOfRowsChange, totalNumberOfProducts }: Props) 
         id="numberOfRows"
         onChange={handleInputChange}
       >
-        {[10, 2, 30, 40, 50].map((option) => (
+        {[10, 20, 30, 40, 50].map((option) => (
           <option key={option} value={option}>
             {option}
           </option>

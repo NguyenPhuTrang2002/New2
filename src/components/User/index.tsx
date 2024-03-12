@@ -7,9 +7,11 @@ import Page from "../Layout/Navigation/page"
 import Navigation from "../Layout/Navigation/Show";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loading from "../Loading";
 interface Props {
   ListUser: any;
   onKeywordChange: (newKeyword: string) => void;
+  loading: boolean;
 }
 
 interface UserArray {
@@ -21,7 +23,7 @@ interface UserArray {
   phone: string;
 }
 
-const User = ({ ListUser, onKeywordChange }: Props) => {
+const User = ({ ListUser, onKeywordChange, loading }: Props) => {
   const [ListUserArray, setListUserArray] = useState<UserArray[]>([]);
   const [numberOfRows, setNumberOfRows] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -58,7 +60,7 @@ const User = ({ ListUser, onKeywordChange }: Props) => {
         {/* Sidebar */}
         <Sidebar />
         {/* Content */}
-        <div className="w-full px-[26px] py-4 h-auto">
+        <div className="w-full px-[26px] py-2 h-auto">
           {/* Header */}
           <Header title={'Danh sách người dùng'} />
           {/* Header */}
@@ -73,7 +75,7 @@ const User = ({ ListUser, onKeywordChange }: Props) => {
               <img className="cursor-pointer" src="./icons/add.svg" alt="addNew" />
             </div>
           </div>
-          <div className="w-full bg-white rounded-xl shadow-md max-h-[500px] overflow-y-auto">
+          <div className="w-full bg-white rounded-t-xl shadow-md max-h-[500px] overflow-y-auto">
             <table className="w-full">
               <thead>
                 <tr className="text-[13px] border-b border-gray-300 h-[60px]">
@@ -86,46 +88,56 @@ const User = ({ ListUser, onKeywordChange }: Props) => {
                 </tr>
               </thead>
               <tbody style={{ maxHeight: '400px', overflowY: 'auto' }}>
-                {currentProductPage.map((user: UserArray) => (
-                  <Listusers
-                    id={user.id}
-                    avatar={user.avatar}
-                    name={user.name}
-                    email={user.email}
-                    birthday={user.birthday}
-                    phone={user.phone}
-                  />
-                ))}
+                {loading ? (
+                  <tr>
+                    <td className="text-center py-4" colSpan={6}>
+                      <Loading />
+                    </td>
+                  </tr>
+                ) : (
+                  currentProductPage.map((user: UserArray) => (
+                    <Listusers
+                      key={user.id}
+                      id={user.id}
+                      avatar={user.avatar}
+                      name={user.name}
+                      email={user.email}
+                      birthday={user.birthday}
+                      phone={user.phone}
+                    />
+                  ))
+                )}
               </tbody>
+
             </table>
-            <div className="flex justify-between py-4 px-6">
-              <Navigation
-                handleNumberOfRowsChange={handleNumberOfRowsChange}
-                totalNumberOfProducts={ListUserArray.length}
-              />
-              <div className="flex justify-center items-center gap-2">
-                <button
-                  className="bg-[#F1F2F6] w-7 h-7 flex justify-center items-center rounded-md"
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                >
-                  <img src="./icons/leftback.svg" alt="backPage" />
-                </button>
-                {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-                  <Page
-                    key={`page-${pageNumber}`}
-                    pageNumber={pageNumber}
-                    onPageChange={handlePageChange}
-                    activePage={currentPage}
-                    totalItems={ListUserArray.length}
-                    itemsPerPage={numberOfRows} // Truyền giá trị cho prop itemsPerPage
-                  />
-                ))
-                }
-                <button className="bg-[#F1F2F6] w-7 h-7 flex justify-center items-center rounded-md">
-                  <img src="./icons/rightnext.svg" alt="nextPage" />
-                </button>
-              </div>
+          </div>
+          <div className="flex justify-between py-4 px-6  bg-white rounded-b-xl">
+            <Navigation
+              handleNumberOfRowsChange={handleNumberOfRowsChange}
+              totalNumberOfProducts={ListUserArray.length}
+            />
+            <div className="flex justify-center items-center gap-2">
+              <button
+                className="bg-[#F1F2F6] w-7 h-7 flex justify-center items-center rounded-md"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                <img src="./icons/leftback.svg" alt="backPage" />
+              </button>
+              {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+                <Page
+                  key={`page-${pageNumber}`}
+                  pageNumber={pageNumber}
+                  onPageChange={handlePageChange}
+                  activePage={currentPage}
+                  totalItems={ListUserArray.length}
+                  itemsPerPage={numberOfRows}
+                />
+              ))
+              }
+              <button className="bg-[#F1F2F6] w-7 h-7 flex justify-center items-center rounded-md">
+                <img src="./icons/rightnext.svg" alt="nextPage" />
+              </button>
             </div>
           </div>
         </div>

@@ -23,18 +23,18 @@ const ListProducts = ({
   description,
   img,
 }: ListProductsProps) => {
-  const [editingProduct, setEditingProduct] = useState<IProductFormCreate | null>(null); // State để lưu trữ thông tin sản phẩm cần chỉnh sửa
+  const [editingProduct, setEditingProduct] = useState<IProductFormCreate | null>(null);
   const dispatch = useDispatch();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [active, setActive] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false); // State để kiểm soát việc hiển thị confirm dialog
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const handleCancel = () => {
     setActive(false);
   };
 
   const handleEditProduct = async () => {
-    setIsFormOpen(true); // Mở form chỉnh sửa khi chỉnh sửa thành công
+    setIsFormOpen(true);
   };
 
   const deleteProduct: (productId: string) => Promise<any> = async (productId) => {
@@ -51,7 +51,6 @@ const ListProducts = ({
   const handleDeleteProduct = async () => {
     console.log('id: ', id);
     setShowConfirm(true);
-    // Hiển thị confirm dialog khi người dùng nhấn vào icon xóa
   };
 
   const confirmDeleteProduct = async () => {
@@ -69,13 +68,22 @@ const ListProducts = ({
     } catch (error) {
       console.error('Error deleting product:', error);
     }
-    setShowConfirm(false); // Ẩn confirm dialog sau khi xác nhận xóa
+    setShowConfirm(false);
   };
+  const formatPrice = (price: string) => {
+    let priceString = price.toString();
+    let parts = priceString.split('.');
+    let integerPart = parts[0];
+    let decimalPart = parts.length > 1 ? `.${parts[1]}` : '';
+    let formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    let formattedPrice = formattedIntegerPart + decimalPart;
+    return formattedPrice;
+  }
 
   return (
     <tr className="border-b border-gray-300">
-      <td className="text-left px-5 max-w-[100px] whitespace-normal">{title}</td>
-      <td className="text-left">${price}</td>
+      <td className="text-left px-5 max-w-[100px] whitespace-normal py-3">{title}</td>
+      <td className="text-center max-w-10">${formatPrice(price)}</td>
       <td className="text-center">{total}</td>
       <td className="text-left pl-10 max-w-[100px] whitespace-normal">{description}</td>
       <td className="text-center">

@@ -75,7 +75,7 @@ export const FORM_VALIDATION = {
   urlMinLength: 1,
   urlMaxLength: 200,
   numberRegExp: /^[0-9]+(\.[0-9]+)?$/,
-  numberPrice: /^(?!0+(\.[0]+)?$)[0-9]+(\.[0-9]+)?$/,
+  numberPrice: /^(?!0+$)[0-9]+$/,
   phoneRegExp: /^(((\+)84)|0)(3|5|7|8|9)([0-9]{3,13})/,
   nameRegExp: /^([^!@`~#$:%^*&().<>?\\/\\+|=]+?)$/,
   specialCharacters: /[~`!@#$%^&*()+={}[\];:'"<>.,/\\?-_]/g,

@@ -7,6 +7,7 @@ import { ProductApi } from '../../features/api';
 import { useDispatch } from 'react-redux';
 import { reLoad } from '../../features/action/reloadData';
 import { toast } from "react-toastify";
+import { ErrorCode } from '../../features/common/constants';
 
 interface ProductsProps {
   id: string;
@@ -20,9 +21,6 @@ const EditProducts = ({
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<IProductFormCreate>({
     resolver: yupResolver(productFormSchema)
   });
-  // console.log(errors);
-
-
   const [selectUpdate, setSelectUpdate] = useState({
     id: id,
     name: '',
@@ -31,8 +29,6 @@ const EditProducts = ({
     description: '',
     image: ''
   });
-
-  // console.log(id);
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
@@ -67,6 +63,13 @@ const EditProducts = ({
           autoClose: 5000,
         });
       } else {
+        const errorCode = 400;
+        if (errorCode === ErrorCode.VALIDATE) {
+          toast.warning("Tên Sản phẩm đã tồn tại. Vui lòng chọn một sản phẩm khác !", {
+            position: "top-right",
+            autoClose: 5000,
+          });
+        }
       }
     } catch (error) {
       console.error('Error updating product:', error);
@@ -87,6 +90,7 @@ const EditProducts = ({
               placeholder="Nhập Tên Sản Phẩm"
               defaultValue={selectUpdate?.name}
               {...register('name')}
+              readOnly
             />
             <span className='mb-5 text-red-500'>{errors.name?.message}</span>
 

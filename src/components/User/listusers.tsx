@@ -14,18 +14,17 @@ interface ListitemsProps {
   phone: string;
 }
 const Listusers = ({ id, avatar, name, email, birthday, phone }: ListitemsProps) => {
-  const [editingUser, setEditingUser] = useState<IUserFromCreate | null>(null); // State để lưu trữ thông tin người dùng cần chỉnh sửa
+  const [editingUser, setEditingUser] = useState<IUserFromCreate | null>(null);
   const dispatch = useDispatch();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [active, setActive] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false); // State để kiểm soát việc hiển thị confirm dialog
-
+  const [showConfirm, setShowConfirm] = useState(false);
   const handleCancel = () => {
     setActive(false);
   };
 
   const handleEditUser = async () => {
-    setIsFormOpen(true); // Mở form chỉnh sửa khi chỉnh sửa thành công
+    setIsFormOpen(true);
   };
 
   const deleteUser: (userId: string) => Promise<any> = async (userId) => {
@@ -42,7 +41,6 @@ const Listusers = ({ id, avatar, name, email, birthday, phone }: ListitemsProps)
   const handleDeleteUser = async () => {
     console.log('id: ', id);
     setShowConfirm(true);
-    // Hiển thị confirm dialog khi người dùng nhấn vào icon xóa
   };
 
   const confirmDeleteUser = async () => {
@@ -60,7 +58,7 @@ const Listusers = ({ id, avatar, name, email, birthday, phone }: ListitemsProps)
     } catch (error) {
       console.error('Error deleting user :', error);
     }
-    setShowConfirm(false); // Ẩn confirm dialog sau khi xác nhận xóa
+    setShowConfirm(false);
   };
 
   return (

@@ -7,6 +7,7 @@ import { productFormSchema } from '../../schemas/product.schema';
 import { useDispatch } from 'react-redux';
 import { reLoad } from '../../features/action/reloadData';
 import { toast } from "react-toastify";
+import { ErrorCode } from '../../features/common/constants';
 
 
 interface ProductsProps {
@@ -37,11 +38,21 @@ const Products = ({
       handleClose();
       dispatch(reLoad(true));
       setIsFormOpen(false);
+      toast.success("Thêm mới sản phẩm thành công!", {
+        position: "top-right",
+        autoClose: 5000,
+      });
     }
-    toast.success("Thêm mới sản phẩm thành công !", {
-      position: "top-right",
-      autoClose: 5000,
-    });
+    else {
+      const errorCode = 400;
+      if (errorCode === ErrorCode.VALIDATE) {
+        toast.warning("Sản phẩm đã tồn tại. Vui lòng chọn một sản phẩm khác !", {
+          position: "top-right",
+          autoClose: 5000,
+        });
+      }
+    }
+
   }
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
